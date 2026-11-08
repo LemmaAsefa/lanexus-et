@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LA NEXUS™ | Smart Contract, Scope of Work & QR Invoice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root { --obsidian: #05070E; --navy: #0B1224; --crimson: #FF1E27; --gold: #D4AF37; --cyan: #00E5FF; --text: #F4F6F9; --silver: #94A3B8; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+    body { background: var(--obsidian); color: var(--text); padding: 20px 12px 50px; }
+    .wrapper { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.25fr; gap: 24px; }
+    @media (max-width: 900px) { .wrapper { grid-template-columns: 1fr; } }
+
+    .panel { background: var(--navy); border: 1.5px solid rgba(212,175,55,0.4); border-radius: 20px; padding: 22px; box-shadow: 0 15px 40px rgba(0,0,0,0.7); }
+    .top-nav { max-width: 1100px; margin: 0 auto 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .lang-btn { background: rgba(212,175,55,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 7px 14px; border-radius: 20px; font-weight: 800; font-size: 12px; cursor: pointer; }
+    .lang-btn.active { background: var(--gold); color: #000; }
+
+    h2 { color: var(--gold); font-size: 17px; margin-bottom: 14px; letter-spacing: 1px; }
+    label { display: block; font-size: 12px; font-weight: 700; color: var(--silver); margin-top: 10px; }
+    input, select, textarea { width: 100%; padding: 10px 12px; margin-top: 4px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: #050811; color: #fff; font-size: 13px; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+
+    .sig-pad-wrap { margin-top: 8px; background: #03050a; border: 1px dashed var(--gold); border-radius: 10px; position: relative; }
+    canvas.sig-canvas { width: 100%; height: 95px; cursor: crosshair; touch-action: none; }
+    .clear-sig { position: absolute; top: 6px; right: 8px; background: rgba(255,30,39,0.25); color: #ff6b6b; border: 1px solid #ff4d4f; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; cursor: pointer; }
+
+    /* OFFICIAL PRINTABLE CONTRACT & INVOICE DOCUMENT */
+    #contractDoc { background: linear-gradient(160deg, #070B16 0%, #03050A 100%); border: 2.5px solid var(--gold); border-radius: 18px; padding: 28px 24px; color: #fff; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.85); }
+    .doc-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); padding-bottom: 16px; margin-bottom: 18px; }
+    .doc-brand { display: flex; align-items: center; gap: 14px; }
+    .mini-logo { width: 56px; height: 56px; border-radius: 50%; background: #04060C; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; box-shadow: 0 0 15px rgba(0,229,255,0.3); }
+    .mini-logo .l { color: var(--crimson); } .mini-logo .a { color: #fff; }
+    .doc-title-badge { background: linear-gradient(135deg, #FFE57F, var(--gold)); color: #000; padding: 6px 14px; border-radius: 8px; font-weight: 900; font-size: 12px; letter-spacing: 1px; text-align: right; }
+
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 14px; font-size: 12px; line-height: 1.7; margin-bottom: 16px; }
+    .scope-box { background: rgba(11,18,36,0.7); border: 1px solid rgba(0,229,255,0.25); border-radius: 12px; padding: 14px; margin-bottom: 16px; }
+    .scope-box h4 { color: var(--cyan); font-size: 12.5px; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+    .scope-text { font-size: 12px; color: #e2e8f0; line-height: 1.65; white-space: pre-line; }
+
+    .fin-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12.5px; }
+    .fin-table td { padding: 9px 12px; border-bottom: 1px dashed rgba(255,255,255,0.12); }
+    .fin-table tr.highlight { background: rgba(212,175,55,0.15); font-weight: 900; color: var(--gold); font-size: 14px; border: 1px solid var(--gold); }
+
+    .terms-box { font-size: 10.5px; color: var(--silver); line-height: 1.55; margin-bottom: 18px; padding: 10px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--crimson); }
+    .doc-footer { display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: center; border-top: 1.5px dashed rgba(212,175,55,0.4); padding-top: 14px; }
+    .sig-display { text-align: center; font-size: 11px; color: var(--silver); }
+    .sig-display img { height: 50px; max-width: 140px; object-fit: contain; display: block; margin: 0 auto 4px; border-bottom: 1px solid var(--gold); }
+
+    .btn-dl { width: 100%; background: linear-gradient(135deg, #FFE57F, var(--gold)); color: #000; border: none; padding: 15px; border-radius: 12px; font-weight: 900; font-size: 14px; cursor: pointer; margin-top: 16px; letter-spacing: 1px; box-shadow: 0 8px 25px rgba(212,175,55,0.4); }
+  </style>
+</head>
+<body>
+
+  <div class="top-nav">
+    <a href="index.html" style="color:var(--gold); text-decoration:none; font-weight:800; font-size:13px;">← BACK TO LA NEXUS™ WEBSITE</a>
+    <div style="display:flex; gap:6px;">
+      <button class="lang-btn active" id="btnOm" onclick="setDocLang('om')">Afaan Oromoo</button>
+      <button class="lang-btn" id="btnAm" onclick="setDocLang('am')">አማርኛ</button>
+      <button class="lang-btn" id="btnEn" onclick="setDocLang('en')">English</button>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    <!-- LEFT: INPUT CONTROLS -->
+    <div class="panel">
+      <h2 id="formTitle">📝 Waliigaltee & Nagahee Qopheessi</h2>
+      
+      <label id="lblClient">Maqaa Maamilaa / Dhaabbataa:</label>
+      <input type="text" id="inClient" value="Dhaabbata Haaraa PLC" oninput="syncDoc()">
+
+      <label id="lblPhone">Lakk. Bilbilaa Maamilaa:</label>
+      <input type="text" id="inPhone" value="+251 911 000 000" oninput="syncDoc()">
+
+      <label id="lblPkg">Pakeejii Tajaajilaa Filadhu:</label>
+      <select id="inPkg" onchange="applyPresetPkg()">
+        <option value="custom">-- Pakeejii Filadhu --</option>
+        <option value="full" selected>🥇 Full Digital Transformation (Brand + Web + 8K Video + SEO)</option>
+        <option value="growth">⭐ Growth Pro (Logo + 5-Page Web + Telegram Bot + USSD)</option>
+        <option value="starter">🥉 Starter Suite (Logo + Print + 3-Page Web)</option>
+      </select>
+
+      <label id="lblScope">Waan Hojjetamu (Scope of Work):</label>
+      <textarea id="inScope" rows="4" oninput="syncDoc()">1. Master Golden-Ratio Brand Identity, Logo & VIP Print Suite
+2. 5-Page Responsive Offline-First Web Application & QR Menu/System
+3. Automated Telegram Bot Order Notification & Google Sheets CRM
+4. 8K Commercial Promo Video & Verified Google Maps SEO Setup</textarea>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div>
+          <label id="lblTotal">Gatii Waliigalaa (ETB):</label>
+          <input type="number" id="inTotal" value="35000" oninput="syncDoc()">
+        </div>
+        <div>
+          <label id="lblAdvPct">Kaffaltii Dursaa (%):</label>
+          <select id="inAdvPct" onchange="syncDoc()">
+            <option value="50" selected>50% (Advance)</option>
+            <option value="40">40% (Advance)</option>
+            <option value="30">30% (Advance)</option>
+            <option value="100">100% (Full Paid)</option>
+          </select>
+        </div>
+      </div>
+
+      <label id="lblRetainer">To'annoo Ji'aa (Monthly Retainer ETB):</label>
+      <input type="number" id="inRetainer" value="3500" oninput="syncDoc()">
+
+      <label id="lblSigAgency">✍️ Mallattoo CEO Lemma Asefa (Asirratti Mallatteessi):</label>
+      <div class="sig-pad-wrap">
+        <canvas id="sigCanvas1" class="sig-canvas" width="380" height="95"></canvas>
+        <button type="button" class="clear-sig" onclick="clearSig(1)">Haqi</button>
+      </div>
+
+      <label id="lblSigClient">✍️ Mallattoo Maamilaa (Maamilli Asirratti Mallatteessa):</label>
+      <div class="sig-pad-wrap">
+        <canvas id="sigCanvas2" class="sig-canvas" width="380" height="95"></canvas>
+        <button type="button" class="clear-sig" onclick="clearSig(2)">Haqi</button>
+      </div>
+
+      <button type="button" class="btn-dl" onclick="downloadContract()">📥 WALIIGALTEE & NAGAHEE BUUFADHU (PNG)</button>
+    </div>
+
+    <!-- RIGHT: LIVE OFFICIAL DOCUMENT PREVIEW -->
+    <div>
+      <div id="contractDoc">
+        <div class="doc-header">
+          <div class="doc-brand">
+            <div class="mini-logo"><span class="l">L</span><span class="a">A</span></div>
+            <div>
+              <div style="font-weight:900; font-size:19px; letter-spacing:3px;">LA NE<span style="color:var(--crimson);">X</span>US<sup style="color:var(--gold); font-size:10px;">™</sup></div>
+              <div style="font-size:9px; color:var(--gold); letter-spacing:2.5px; font-weight:700;">LENS MEETS AUTOMATION</div>
+              <div style="font-size:10px; color:var(--silver); margin-top:2px;">📞 +251 909 506 573 | ✉️ asefalemma.official@gmail.com</div>
+            </div>
+          </div>
+          <div>
+            <div class="doc-title-badge" id="docBadge">WALIIGALTEE & NAGAHEE</div>
+            <div style="font-size:10.5px; color:var(--silver); text-align:right; margin-top:5px;">
+              Ref: <b style="color:#fff;" id="docRef">LNX-2026-884</b><br>
+              <span id="docDate">2026-11-08</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="meta-grid">
+          <div>
+            <span style="color:var(--gold); font-weight:800; font-size:10.5px;" id="metaFromLbl">DHAABBATA HOJJETU (AGENCY):</span><br>
+            <b>LA NEXUS™ Creative & Tech Agency</b><br>
+            CEO & Director: <b>Lemma Asefa</b><br>
+            Finfinnee / Oromia, Ethiopia
+          </div>
+          <div>
+            <span style="color:var(--cyan); font-weight:800; font-size:10.5px;" id="metaToLbl">MAAMILA (CLIENT):</span><br>
+            <b id="outClient" style="font-size:13.5px; color:#fff;">---</b><br>
+            Tel: <span id="outPhone">---</span><br>
+            Status: <span style="color:#2ed573; font-weight:800;">✓ OFFICIAL AGREEMENT</span>
+          </div>
+        </div>
+
+        <div class="scope-box">
+          <h4 id="docScopeHead">📋 TARREE HOJIIWWAN HOJJETAMANII (SCOPE OF WORK):</h4>
+          <div class="scope-text" id="outScope"></div>
+        </div>
+
+        <table class="fin-table">
+          <tr>
+            <td id="tLblTotal">Gatii Hojii Waliigalaa (Total Project Investment):</td>
+            <td style="text-align:right; font-weight:800;" id="outTotal">35,000 ETB</td>
+          </tr>
+          <tr class="highlight">
+            <td id="tLblAdvance">⚡ Kaffaltii Dursaa Har'a Kaffalamu (<span id="outPct">50</span>% Advance Due Now):</td>
+            <td style="text-align:right;" id="outAdvance">17,500 ETB</td>
+          </tr>
+          <tr>
+            <td id="tLblBalance">Haftee Hojii Xumuraa Irratti Kaffalamu (Remaining Balance on Handover):</td>
+            <td style="text-align:right; font-weight:700; color:var(--cyan);" id="outBalance">17,500 ETB</td>
+          </tr>
+          <tr>
+            <td id="tLblRetainer">🔄 Waliigaltee To'annoo Ji'aa (Optional Monthly Maintenance & Backup):</td>
+            <td style="text-align:right; font-weight:700; color:var(--silver);" id="outRetainer">3,500 ETB / Month</td>
+          </tr>
+        </table>
+
+        <div style="background:rgba(212,175,55,0.08); border:1px dashed var(--gold); border-radius:10px; padding:10px 12px; font-size:11px; margin-bottom:14px; line-height:1.6;">
+          <b style="color:var(--gold);" id="payMethodsHead">🏦 HERREGA BAANKII KAFFALTII (LEMMA ASEFA):</b><br>
+          • <b>Telebirr:</b> <code>0909506573</code> &nbsp;|&nbsp; • <b>CBE:</b> <code>1000342728743</code> &nbsp;|&nbsp; • <b>BOA:</b> <code>212322628</code> &nbsp;|&nbsp; • <b>Awash:</b> <code>013351316799600</code>
+        </div>
+
+        <div class="terms-box" id="docTerms">
+          <b>SEERA WALIIGALTEE:</b> Kaffaltiin dursaa (Advance) akkuma raawwatameen hojiin ni jalqabama. Kaffaltiin haftee immoo hojiin xumuramee yeroo maamilaaf dabarfamu (Handover) kan kaffalamu ta'a.
+        </div>
+
+        <div class="doc-footer">
+          <div class="sig-display">
+            <img id="outSig1" src="" alt="CEO Signature">
+            <b style="color:var(--gold);">LEMMA ASEFA</b><br><span id="sig1Role">CEO, LA NEXUS™</span>
+          </div>
+          <div class="sig-display">
+            <img id="outSig2" src="" alt="Client Signature">
+            <b id="outSigClientName" style="color:#fff;">CLIENT</b><br><span id="sig2Role">Mallattoo Maamilaa</span>
+          </div>
+          <div style="text-align:center;">
+            <img id="docQr" src="" width="72" height="72" style="background:#fff; padding:4px; border-radius:8px; border:1.5px solid var(--gold);">
+            <div style="font-size:8.5px; color:var(--gold); font-weight:800; margin-top:3px;">VERIFIED SEAL</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DOC_I18N = {
+      om: {
+        badge: "WALIIGALTEE & NAGAHEE", from: "DHAABBATA HOJJETU (AGENCY):", to: "MAAMILA (CLIENT):",
+        scopeHead: "📋 TARREE HOJIIWWAN HOJJETAMANII (SCOPE OF WORK):",
+        total: "Gatii Hojii Waliigalaa (Total Project Fee):",
+        adv: "⚡ Kaffaltii Dursaa Har'a Kaffalamu (Advance Due):",
+        bal: "Haftee Xumura Irratti Kaffalamu (Balance on Handover):",
+        ret: "🔄 To'annoo Ji'aa, Backup & Deeggarsa (Monthly Retainer):",
+        bankHead: "🏦 HERREGA BAANKII KAFFALTII (LEMMA ASEFA):",
+        terms: "<b>SEERA WALIIGALTEE:</b> Kaffaltiin dursaa (Advance) akkuma raawwatameen hojiin ni eegalama. Hafteen immoo hojiin 100% xumuramee maamilaaf yeroo dabarfamu kaffalama.",
+        sig2: "Mallattoo Maamilaa"
+      },
+      am: {
+        badge: "የስራ ውል እና ደረሰኝ", from: "ስራውን የሚሰራው ድርጅት (AGENCY):", to: "ደንበኛ (CLIENT):",
+        scopeHead: "📋 የሚከናወኑ ስራዎች ዝርዝር (SCOPE OF WORK):",
+        total: "ጠቅላላ የስራው ዋጋ (Total Project Fee):",
+        adv: "⚡ የቅድሚያ ክፍያ (Advance Payment Due Now):",
+        bal: "ስራው ሲጠናቀቅ የሚከፈል ቀሪ ሂሳብ (Remaining Balance):",
+        ret: "🔄 ወርሃዊ ጥገና እና ክትትል (Monthly Retainer):",
+        bankHead: "🏦 የክፍያ ባንክ ሂሳቦች (ለማ አሰፋ / LEMMA ASEFA):",
+        terms: "<b>የውል ደንቦች:</b> የቅድሚያ ክፍያው እንደተፈጸመ ስራው ወዲያውኑ ይጀመራል። ቀሪው ክፍያ ደግሞ ስራው 100% ተጠናቆ ለደንበኛው ሲረከብ ይከፈላል።",
+        sig2: "የደንበኛው ፊርማ"
+      },
+      en: {
+        badge: "OFFICIAL CONTRACT & INVOICE", from: "SERVICE PROVIDER (AGENCY):", to: "PREPARED FOR (CLIENT):",
+        scopeHead: "📋 DELIVERABLES & SCOPE OF WORK:",
+        total: "Total Project Investment:",
+        adv: "⚡ Advance Deposit Due Upon Signing:",
+        bal: "Remaining Balance Due Upon Final Handover:",
+        ret: "🔄 Monthly Maintenance, Security & Cloud Backup Retainer:",
+        bankHead: "🏦 OFFICIAL PAYMENT ACCOUNTS (LEMMA ASEFA):",
+        terms: "<b>TERMS OF AGREEMENT:</b> Project execution commences immediately upon receipt of the advance deposit. Full source files and admin credentials are handed over upon final balance settlement.",
+        sig2: "Client Authorized Signature"
+      }
+    };
+
+    const refCode = "LNX-" + new Date().getFullYear() + "-" + Math.floor(1000 + Math.random() * 9000);
+    document.getElementById('docRef').innerText = refCode;
+    document.getElementById('docDate').innerText = new Date().toLocaleDateString();
+
+    function setDocLang(l) {
+      ['Om', 'Am', 'En'].forEach(c => document.getElementById('btn' + c).classList.toggle('active', c.toLowerCase() === l));
+      const t = DOC_I18N[l];
+      document.getElementById('docBadge').innerText = t.badge;
+      document.getElementById('metaFromLbl').innerText = t.from;
+      document.getElementById('metaToLbl').innerText = t.to;
+      document.getElementById('docScopeHead').innerText = t.scopeHead;
+      document.getElementById('tLblTotal').innerText = t.total;
+      document.getElementById('tLblBalance').innerText = t.bal;
+      document.getElementById('tLblRetainer').innerText = t.ret;
+      document.getElementById('payMethodsHead').innerText = t.bankHead;
+      document.getElementById('docTerms').innerHTML = t.terms;
+      document.getElementById('sig2Role').innerText = t.sig2;
+      syncDoc();
+    }
+
+    function applyPresetPkg() {
+      const v = document.getElementById('inPkg').value;
+      if (v === 'full') {
+        document.getElementById('inScope').value = "1. Master Golden-Ratio Brand Identity, Logo & VIP Print Suite\n2. 5-Page Responsive Offline-First Web Application & QR System\n3. Automated Telegram Bot Order Notification & Google Sheets CRM\n4. 8K Commercial Promo Video & Verified Google Maps SEO Setup";
+        document.getElementById('inTotal').value = 35000;
+      } else if (v === 'growth') {
+        document.getElementById('inScope').value = "1. Dynamic Brand Identity & Print Collaterals\n2. 5-Page Liquid Glass Website + 1-Click USSD Checkout\n3. Telegram Order Bot + Verified Google Maps Profile";
+        document.getElementById('inTotal').value = 22000;
+      } else if (v === 'starter') {
+        document.getElementById('inScope').value = "1. Professional Logo Design & Business Card\n2. 3-Page Mobile-First Website with Direct Call & Telegram Links\n3. Basic Google Maps Pin Setup";
+        document.getElementById('inTotal').value = 12000;
+      }
+      syncDoc();
+    }
+
+    function syncDoc() {
+      const client = document.getElementById('inClient').value || "VIP Client";
+      const phone = document.getElementById('inPhone').value || "---";
+      const scope = document.getElementById('inScope').value;
+      const total = parseFloat(document.getElementById('inTotal').value) || 0;
+      const pct = parseFloat(document.getElementById('inAdvPct').value) || 50;
+      const retainer = parseFloat(document.getElementById('inRetainer').value) || 0;
+
+      const adv = Math.round(total * (pct / 100));
+      const bal = total - adv;
+
+      document.getElementById('outClient').innerText = client;
+      document.getElementById('outSigClientName').innerText = client.toUpperCase();
+      document.getElementById('outPhone').innerText = phone;
+      document.getElementById('outScope').innerText = scope;
+      document.getElementById('outTotal').innerText = total.toLocaleString() + " ETB";
+      document.getElementById('outPct').innerText = pct;
+      document.getElementById('outAdvance').innerText = adv.toLocaleString() + " ETB (" + pct + "%)";
+      document.getElementById('outBalance').innerText = bal.toLocaleString() + " ETB";
+      document.getElementById('outRetainer').innerText = retainer.toLocaleString() + " ETB / Ji'atti";
+
+      const qrData = `LA NEXUS CONTRACT | Ref: ${refCode} | Client: ${client} | Total: ${total} ETB | Advance: ${adv} ETB`;
+      document.getElementById('docQr').src = `https://quickchart.io/qr?text=${encodeURIComponent(qrData)}&size=120&dark=05070E`;
+    }
+
+    // Dual Signature Pads (CEO & Client)
+    function setupSigPad(num) {
+      const canvas = document.getElementById('sigCanvas' + num);
+      const ctx = canvas.getContext('2d');
+      ctx.strokeStyle = num === 1 ? '#D4AF37' : '#00E5FF';
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      let drawing = false;
+
+      function getPos(e) {
+        const r = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return { x: (clientX - r.left) * (canvas.width / r.width), y: (clientY - r.top) * (canvas.height / r.height) };
+      }
+      function start(e) { e.preventDefault(); drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
+      function move(e) { if (!drawing) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); updateSigPreview(num); }
+      function end() { drawing = false; updateSigPreview(num); }
+
+      canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move); window.addEventListener('mouseup', end);
+      canvas.addEventListener('touchstart', start); canvas.addEventListener('touchmove', move); window.addEventListener('touchend', end);
+    }
+
+    function updateSigPreview(num) {
+      const canvas = document.getElementById('sigCanvas' + num);
+      document.getElementById('outSig' + num).src = canvas.toDataURL('image/png');
+    }
+    function clearSig(num) {
+      const canvas = document.getElementById('sigCanvas' + num);
+      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+      updateSigPreview(num);
+    }
+
+    function downloadContract() {
+      const doc = document.getElementById('contractDoc');
+      html2canvas(doc, { scale: 2.5, useCORS: true, backgroundColor: "#04060B" }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `LA_NEXUS_Contract_${document.getElementById('inClient').value.replace(/\s+/g, '_')}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+
+    setupSigPad(1); setupSigPad(2); syncDoc();
+  </script>
+</body>
+</html>

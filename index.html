@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LA NEXUS™ | Lens Meets Automation — Global Creative & Tech Agency</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --obsidian: #04060C; --navy: #0A1022; --crimson: #FF1E27; --gold: #D4AF37; --gold-light: #FFE57F; --cyan: #00E5FF; --titanium: #F4F6F9; --silver: #94A3B8; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
+    body { background: radial-gradient(circle at 50% 0%, #0E1733 0%, var(--obsidian) 65%); color: var(--titanium); overflow-x: hidden; min-height: 100vh; }
+    #spotlight { position: fixed; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%); pointer-events: none; transform: translate(-50%, -50%); z-index: 0; }
+    nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width: 94%; max-width: 1320px; padding: 13px 26px; background: rgba(8, 12, 24, 0.85); backdrop-filter: blur(22px); border: 1.5px solid rgba(212, 175, 55, 0.38); border-radius: 60px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 12px 40px rgba(0,0,0,0.75); }
+    .nav-brand { font-weight: 900; font-size: 1.3rem; letter-spacing: 4px; color: #fff; text-decoration: none; }
+    .nav-brand span { color: var(--crimson); } .nav-brand sup { font-size: 0.6rem; color: var(--gold); }
+    .nav-links { display: flex; gap: 22px; align-items: center; }
+    .nav-links a { color: var(--silver); text-decoration: none; font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px; transition: 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .lang-wrapper { position: relative; }
+    .globe-btn { background: rgba(212,175,55,0.15); border: 1.5px solid var(--gold); color: var(--gold-light); padding: 7px 14px; border-radius: 30px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 0.78rem; }
+    .lang-dropdown { position: absolute; top: 48px; right: 0; width: 260px; background: rgba(8, 12, 24, 0.98); border: 1.5px solid var(--gold); border-radius: 18px; padding: 14px; box-shadow: 0 20px 50px rgba(0,0,0,0.9); display: none; z-index: 2000; }
+    .lang-dropdown.active { display: block; }
+    .lang-search { width: 100%; padding: 9px 12px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.4); background: rgba(255,255,255,0.06); color: #fff; font-size: 0.82rem; margin-bottom: 10px; outline: none; }
+    .lang-list { max-height: 210px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
+    .lang-item { padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; color: var(--titanium); display: flex; justify-content: space-between; }
+    .lang-item:hover { background: rgba(212, 175, 55, 0.25); color: var(--gold-light); font-weight: 700; }
+    .btn-cta { background: linear-gradient(135deg, var(--crimson), #900005); color: #fff !important; padding: 9px 20px; border-radius: 30px; font-weight: 800 !important; box-shadow: 0 0 18px rgba(255, 30, 39, 0.5); }
+
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 125px 20px 65px; position: relative; z-index: 1; }
+    .master-logo-container { width: 290px; height: 290px; position: relative; margin-bottom: 24px; filter: drop-shadow(0 0 35px rgba(0, 229, 255, 0.22)); cursor: pointer; }
+    .svg-master-logo { width: 100%; height: 100%; overflow: visible; }
+    .outer-blades-group { transform-origin: 150px 150px; animation: spinCW 20s linear infinite; }
+    .focus-ring-group { transform-origin: 150px 150px; animation: spinCCW 28s linear infinite; }
+    .octagon-grid { transform-origin: 150px 150px; animation: pulseGrid 4s ease-in-out infinite; }
+    .nexus-star { transform-origin: 171px 168px; animation: starGlow 2.2s ease-in-out infinite; }
+    .master-logo-container:hover .outer-blades-group { animation-duration: 3.5s; }
+    @keyframes spinCW { 100% { transform: rotate(360deg); } }
+    @keyframes spinCCW { 100% { transform: rotate(-360deg); } }
+    @keyframes pulseGrid { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.35; } }
+    @keyframes starGlow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+
+    .hero-title { font-size: 3.4rem; font-weight: 900; letter-spacing: 12px; margin-bottom: 8px; }
+    .hero-title span { color: var(--crimson); } .hero-title sup { font-size: 1rem; color: var(--gold); letter-spacing: 0; }
+    .hero-slogan { font-size: 0.92rem; font-weight: 700; letter-spacing: 10px; color: var(--titanium); margin-bottom: 22px; }
+    .hero-slogan b { color: var(--crimson); }
+    .hero-sub { max-width: 750px; font-size: 1.05rem; color: var(--silver); line-height: 1.75; margin-bottom: 34px; }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .btn-gold { background: linear-gradient(135deg, var(--gold-light), var(--gold), #9A7B1C); color: #05070E; padding: 15px 32px; border-radius: 40px; font-weight: 800; text-decoration: none; letter-spacing: 1.2px; transition: 0.3s; box-shadow: 0 0 25px rgba(212, 175, 55, 0.45); display: inline-block; }
+    .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 0 40px rgba(212, 175, 55, 0.85); }
+    .btn-outline { padding: 15px 30px; border-radius: 40px; font-weight: 700; text-decoration: none; color: #fff; border: 1.5px solid var(--cyan); background: rgba(0, 229, 255, 0.08); letter-spacing: 1.2px; transition: 0.3s; display: inline-block; }
+    .btn-outline:hover { background: var(--cyan); color: #000; box-shadow: 0 0 28px var(--cyan); }
+
+    .section { max-width: 1280px; margin: 0 auto; padding: 75px 20px; position: relative; z-index: 1; }
+    .section-header { text-align: center; margin-bottom: 50px; }
+    .section-header .tag { color: var(--cyan); font-size: 0.78rem; font-weight: 800; letter-spacing: 4px; display: block; margin-bottom: 8px; }
+    .section-header h2 { font-size: 2rem; letter-spacing: 3px; color: var(--gold); margin-bottom: 10px; font-weight: 900; }
+    .section-header p { color: var(--silver); max-width: 650px; margin: 0 auto; line-height: 1.6; }
+
+    .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .bento-card { background: linear-gradient(160deg, rgba(15, 23, 45, 0.8), rgba(6, 9, 18, 0.94)); border: 1.5px solid rgba(212, 175, 55, 0.28); border-radius: 24px; padding: 32px 26px; transition: 0.35s; display: flex; flex-direction: column; justify-content: space-between; }
+    .bento-card:hover { transform: translateY(-7px); border-color: var(--gold); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.18); }
+    .bento-num { font-size: 0.8rem; font-weight: 800; letter-spacing: 2.5px; margin-bottom: 12px; display: block; }
+    .bento-card h3 { font-size: 1.25rem; margin-bottom: 12px; color: #fff; }
+    .bento-card p { color: var(--silver); font-size: 0.9rem; line-height: 1.65; margin-bottom: 18px; }
+
+    .order-box { background: linear-gradient(145deg, rgba(14, 21, 42, 0.94), rgba(4, 6, 12, 0.98)); border: 2px solid var(--gold); border-radius: 30px; padding: 45px 34px; max-width: 860px; margin: 0 auto; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 24px; }
+    input, select, textarea { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.05); color: #fff; font-size: 0.92rem; outline: none; }
+    select option { background: var(--obsidian); color: #fff; }
+    .full-width { grid-column: 1 / -1; }
+    .submit-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; grid-column: 1 / -1; }
+    .btn-tg { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #000; border: none; padding: 15px; border-radius: 40px; font-weight: 800; cursor: pointer; font-size: 0.92rem; }
+    .btn-wa { background: linear-gradient(135deg, #00E5FF, #0088CC); color: #000; border: none; padding: 15px; border-radius: 40px; font-weight: 800; cursor: pointer; font-size: 0.92rem; }
+    footer { text-align: center; padding: 50px 20px; border-top: 1px solid rgba(212, 175, 55, 0.25); color: var(--silver); font-size: 0.8rem; letter-spacing: 2px; }
+    @media (max-width: 768px) { .hero-title { font-size: 2.2rem; letter-spacing: 6px; } .form-grid, .submit-btns { grid-template-columns: 1fr; } .nav-links a:not(.btn-cta) { display: none; } }
+  </style>
+</head>
+<body>
+  <div id="spotlight"></div>
+
+  <nav>
+    <a href="#" class="nav-brand" id="navBrand">LA NE<span>X</span>US<sup>™</sup></a>
+    <div class="nav-links">
+      <a href="#pillars" id="navPillars">ECOSYSTEM</a>
+      <a href="#live-apps" id="navApps">LIVE APPS</a>
+      <a href="contract.html" id="navContract" style="color:var(--gold);">📝 SMART CONTRACT</a>
+      <div class="lang-wrapper">
+        <button class="globe-btn" onclick="toggleLangMenu()">🌐 <span id="currentLangLabel">EN</span> ▾</button>
+        <div class="lang-dropdown" id="langDropdown">
+          <input type="text" class="lang-search" id="langSearch" placeholder="🔍 Search language..." oninput="filterLanguages()">
+          <div class="lang-list" id="langList"></div>
+        </div>
+      </div>
+      <a href="#order" class="btn-cta" id="navStart">⚡ START PROJECT</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="master-logo-container">
+      <svg class="svg-master-logo" viewBox="0 0 300 300">
+        <defs>
+          <linearGradient id="obsidianBlade" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#384357"/><stop offset="100%" stop-color="#0B0F19"/></linearGradient>
+          <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE57F"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#8A6D1B"/></linearGradient>
+          <linearGradient id="crimsonGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF3B43"/><stop offset="100%" stop-color="#8A0005"/></linearGradient>
+          <linearGradient id="titaniumGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#B0BCCB"/></linearGradient>
+          <radialGradient id="coreBg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#101B33"/><stop offset="100%" stop-color="#04060C"/></radialGradient>
+        </defs>
+        <circle cx="150" cy="150" r="95" fill="none" stroke="#00E5FF" stroke-width="6" opacity="0.2" filter="blur(8px)"/>
+        <g class="outer-blades-group">
+          <path d="M 38 195 A 122 122 0 0 1 162 29 L 154 52 A 98 98 0 0 0 58 184 Z" fill="url(#obsidianBlade)" stroke="url(#goldRim)" stroke-width="2.5"/>
+          <path d="M 172 31 A 122 122 0 0 1 248 222 L 226 208 A 98 98 0 0 0 165 54 Z" fill="url(#titaniumGrad)"/>
+          <path d="M 240 232 A 122 122 0 0 1 42 206 L 64 195 A 98 98 0 0 0 220 216 Z" fill="url(#crimsonGrad)"/>
+          <circle cx="164" cy="41" r="4" fill="#FF1E27"/><circle cx="233" cy="217" r="4" fill="#FF1E27"/><circle cx="51" cy="195" r="4" fill="#FF1E27"/>
+        </g>
+        <g class="focus-ring-group">
+          <circle cx="150" cy="150" r="88" fill="none" stroke="#00E5FF" stroke-width="1.5" opacity="0.45"/>
+          <circle cx="150" cy="150" r="83" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-dasharray="3 8" opacity="0.65"/>
+          <circle cx="150" cy="150" r="78" fill="none" stroke="#FF1E27" stroke-width="1.2" opacity="0.4"/>
+        </g>
+        <circle cx="150" cy="150" r="74" fill="url(#coreBg)" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+        <polygon class="octagon-grid" points="150,86 195,105 214,150 195,195 150,214 105,195 86,150 105,105" fill="none" stroke="#00E5FF" stroke-width="1" stroke-dasharray="3 3"/>
+        <g filter="drop-shadow(3px 5px 6px rgba(0,0,0,0.85))">
+          <path d="M 102 112 L 120 104 L 120 176 L 154 176 L 150 192 L 102 192 Z" fill="url(#crimsonGrad)"/>
+          <path d="M 164 104 L 178 104 L 204 192 L 186 192 L 171 132 L 156 172 L 140 172 Z" fill="url(#titaniumGrad)"/>
+          <path class="nexus-star" d="M 171 146 L 176 163 L 198 168 L 176 173 L 171 190 L 166 173 L 144 168 L 166 163 Z" fill="#FF1E27"/>
+        </g>
+      </svg>
+    </div>
+
+    <h1 class="hero-title" id="heroBrand">LA NE<span>X</span>US<sup>™</sup></h1>
+    <p class="hero-slogan">L E N S &nbsp; <b>M E E T S</b> &nbsp; A U T O M A T I O N</p>
+    <p class="hero-sub" id="heroDesc">We transform ambitious businesses into automated digital empires—bridging 8K Cinematography, Algorithmic Brand Architecture, and Offline-First Web & AI Systems.</p>
+    <div class="hero-btns">
+      <a href="#live-apps" class="btn-gold" id="btnViewApps">🚀 EXPLORE LIVE WEB APPS</a>
+      <a href="contract.html" class="btn-outline" id="btnContract">📝 SMART CONTRACT & INVOICE</a>
+    </div>
+  </section>
+
+  <!-- LIVE INTERACTIVE CLIENT SYSTEMS SHOWCASE -->
+  <section id="live-apps" class="section">
+    <div class="section-header">
+      <span class="tag">01 // LIVE PRODUCTION SYSTEMS</span>
+      <h2 id="appsTitle">INTERACTIVE CLIENT ECOSYSTEMS</h2>
+      <p id="appsSub">Test our live, production-deployed digital platforms and brand case studies below.</p>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-card">
+        <div>
+          <span class="bento-num" style="color:var(--gold);">LIVE SYSTEM 01 // FINTECH & AI OCR</span>
+          <h3 id="app1Title">Carraa Biiftuu™ Digital Platform</h3>
+          <p id="app1Desc">Full-stack digital lottery & ticket engine featuring In-Browser AI Receipt OCR verification, 1-1000 interactive seat matrix, 1-Click USSD payment, Live Draw Wheel, and Admin QR Scanner.</p>
+        </div>
+        <a href="https://carraa-biiftuu.web.app" target="_blank" class="btn-gold" style="text-align:center; padding:12px;">OPEN LIVE APP ↗</a>
+      </div>
+
+      <div class="bento-card">
+        <div>
+          <span class="bento-num" style="color:var(--cyan);">LIVE SYSTEM 02 // HOSPITALITY & POS</span>
+          <h3 id="app2Title">MI'JUU™ Restaurant Menu & POS</h3>
+          <p id="app2Desc">Trilingual cultural & modern dining platform with 24 HD dishes, 8-Bank Ethiopian checkout, instant digital receipt generation, Waitress POS calculator, and PIN-protected Admin Hub.</p>
+        </div>
+        <a href="https://mijuu-et.web.app" target="_blank" class="btn-outline" style="text-align:center; padding:12px;">OPEN LIVE MENU ↗</a>
+      </div>
+
+      <div class="bento-card">
+        <div>
+          <span class="bento-num" style="color:var(--crimson);">LIVE SYSTEM 03 // BRAND ARCHITECTURE</span>
+          <h3 id="app3Title">Adobe Behance Master Case Study</h3>
+          <p id="app3Desc">Complete 6-module visual identity showcase: Golden-Ratio (φ=1.618) geometry, 8K cinema studio gear, NFC executive print cards, outdoor night billboards, and 3D corporate HQ signage.</p>
+        </div>
+        <a href="https://www.behance.net/gallery/258148021/LA-NEXUS-Brand-Identity-8K-Cinema-Web-Automation" target="_blank" class="btn-outline" style="text-align:center; padding:12px;">VIEW ON BEHANCE ↗</a>
+      </div>
+
+      <div class="bento-card">
+        <div>
+          <span class="bento-num" style="color:#2ed573;">LIVE SYSTEM 04 // LEGAL & BILLING</span>
+          <h3 id="app4Title">Smart Contract & QR Invoice Hub</h3>
+          <p id="app4Desc">Automated client onboarding agreement generator with instant 50% advance calculation, dual touch-screen digital signature pads, and verifiable QR seal export.</p>
+        </div>
+        <a href="contract.html" class="btn-gold" style="text-align:center; padding:12px;">OPEN CONTRACT HUB ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 CORE PILLARS -->
+  <section id="pillars" class="section">
+    <div class="section-header">
+      <span class="tag">02 // CORE CAPABILITIES</span>
+      <h2 id="pillarsTitle">4-PILLAR DIGITAL TRANSFORMATION</h2>
+      <p id="pillarsSub">Engineered by Founder Lemma Asefa — One unified powerhouse for all your visual, technical, and growth needs.</p>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-card"><div><span class="bento-num" style="color:var(--crimson);">01 // LENS & MEDIA</span><h3 id="p1T">8K Cinematography & Editing</h3><p id="p1D">High-retention commercial video production, documentary storytelling, color grading, and studio audio engineering.</p></div></div>
+      <div class="bento-card"><div><span class="bento-num" style="color:#fff;">02 // BRAND IDENTITY</span><h3 id="p2T">Algorithmic Logos & Print Suite</h3><p id="p2D">Golden-ratio vector architecture, spatial UI/UX design, NFC VIP business cards, letterheads, and packaging systems.</p></div></div>
+      <div class="bento-card"><div><span class="bento-num" style="color:var(--cyan);">03 // AUTOMATION & WEB</span><h3 id="p3T">Full-Stack Web & Telegram Bots</h3><p id="p3D">100% Offline-first web apps, 1-Click Telebirr/CBE USSD checkout, client-side AI receipt fraud detection, and Telegram CRM.</p></div></div>
+      <div class="bento-card"><div><span class="bento-num" style="color:var(--gold);">04 // DIGITAL MARKETING</span><h3 id="p4T">Google Maps SEO & 3X Growth</h3><p id="p4D">Verified Google Business Profile domination, high-converting social media ad funnels, and customer retention loops.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ORDER SECTION -->
+  <section id="order" class="section">
+    <div class="order-box">
+      <div class="section-header" style="margin-bottom:15px;">
+        <span class="tag">03 // INSTANT ONBOARDING</span>
+        <h2 id="ordTitle">⚡ START YOUR PROJECT NOW</h2>
+        <p id="ordSub">Submit your brief below—it routes directly to CEO Lemma Asefa's mobile device.</p>
+      </div>
+      <form onsubmit="event.preventDefault();">
+        <div class="form-grid">
+          <input type="text" id="cName" placeholder="Your Full Name / Company *" required>
+          <input type="tel" id="cPhone" placeholder="Phone Number (+251...) *" required>
+          <select id="sType" class="full-width">
+            <option value="Full Digital Transformation (Brand + Web + 8K Video + SEO)">🥇 Full Digital Transformation (Brand + Web + 8K Video + SEO)</option>
+            <option value="Growth Pro Ecosystem (Logo + Web + Telegram Bot)">⭐ Growth Pro Ecosystem (Logo + Web + Telegram Bot)</option>
+            <option value="8K Cinematography & Video Production">🎬 8K Cinematography & Video Production</option>
+            <option value="Brand Identity & Graphic Design Suite">🎨 Brand Identity & Graphic Design Suite</option>
+            <option value="Custom Web App & AI OCR System">💻 Custom Web App & AI OCR System</option>
+          </select>
+          <textarea id="pDetails" rows="3" class="full-width" placeholder="Tell us about your project goals..."></textarea>
+          <div class="submit-btns">
+            <button type="button" class="btn-tg" onclick="sendOrder('tg')">🚀 SEND VIA TELEGRAM (@lemmaa9)</button>
+            <button type="button" class="btn-wa" onclick="sendOrder('wa')">💬 SEND VIA WHATSAPP (+251 909...)</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 LA NEXUS™ CORPORATION. ALL RIGHTS RESERVED.</p>
+    <p style="color:var(--gold); margin:10px 0; font-weight:700;">L E N S &nbsp; M E E T S &nbsp; A U T O M A T I O N &nbsp; • &nbsp; F I N F I N N E E , E T H I O P I A</p>
+    <p>FOUNDER & DIRECTOR: <span style="color:var(--crimson); font-weight:800;">LEMMA ASEFA</span> &nbsp;|&nbsp; TEL: +251 909 506 573 / +251 786 337 045 &nbsp;|&nbsp; EMAIL: asefalemma.official@gmail.com</p>
+  </footer>
+
+  <script>
+    document.addEventListener('mousemove', e => { const s = document.getElementById('spotlight'); s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px'; });
+
+    const LANGS = [
+      { code: 'en', name: 'English', native: 'English' },
+      { code: 'om', name: 'Afaan Oromoo', native: 'Afaan Oromoo' },
+      { code: 'am', name: 'Amharic', native: 'አማርኛ' },
+      { code: 'ar', name: 'Arabic', native: 'العربية' },
+      { code: 'fr', name: 'French', native: 'Français' }
+    ];
+
+    const L_DICT = {
+      en: {
+        heroDesc: "We transform ambitious businesses into automated digital empires—bridging 8K Cinematography, Algorithmic Brand Architecture, and Offline-First Web & AI Systems.",
+        btnApps: "🚀 EXPLORE LIVE WEB APPS", btnCon: "📝 SMART CONTRACT & INVOICE",
+        appsTitle: "INTERACTIVE CLIENT ECOSYSTEMS", appsSub: "Test our live, production-deployed digital platforms and brand case studies below.",
+        pillarsTitle: "4-PILLAR DIGITAL TRANSFORMATION", pillarsSub: "Engineered by Founder Lemma Asefa — One unified powerhouse for all your visual, technical, and growth needs.",
+        ordTitle: "⚡ START YOUR PROJECT NOW", ordSub: "Submit your brief below—it routes directly to CEO Lemma Asefa's mobile device."
+      },
+      om: {
+        heroDesc: "Daldala keessan waraqaarraa bilisoomsinee gara maashina dijitaalaa ofiin hojjetuutti ceessisna—Waraabbii Viidiyoo 8K, Dizaayinii Brandii, fi Website AI Automation bakka tokkotti isiniif ijaarra.",
+        btnApps: "🚀 WEEBSAAYITOOTA LIVE ILAALI", btnCon: "📝 WALIIGALTEE & NAGAHEE",
+        appsTitle: "HOJIIWWAN KEENYA QABATAMAA (LIVE APPS)", appsSub: "Weebsaayitoota fi sirnoota dijitaalaa nuti ijaarre tuquudhaan kallattiin yaalaa.",
+        pillarsTitle: "UTUBAAWWAN JIJJIIRAMA DIJITAALAA 4N", pillarsSub: "Obbo Lemma Asefaatiin kan ijaarame — Viidiyoo, Dizaayinii, Website fi Beeksisa keessan bakka tokkotti.",
+        ordTitle: "⚡ AJAJA KEESSAN AMMA ERGA", ordSub: "Unka armaan gadii guutaa—battalatti bilbila CEO Lemma Asefa irratti dhufa."
+      },
+      am: {
+        heroDesc: "ንግድዎን ከወረቀት አሰራር ነፃ አውጥተን ወደ ዘመናዊ ዲጂታል ስርዓት እንቀይራለን—8K ቪዲዮ ቀረፃ፣ ዘመናዊ ብራንዲንግ እና ድህረ-ገጽ አውቶሜሽን በአንድ ቦታ።",
+        btnApps: "🚀 ቀጥታ ስራዎቻችንን ይሞክሩ", btnCon: "📝 የስራ ውል እና ደረሰኝ",
+        appsTitle: "በስራ ላይ ያሉ ዲጂታል ሲስተሞች (LIVE APPS)", appsSub: "በእኛ የተገነቡ ዘመናዊ ድህረ-ገጾችን እና ሲስተሞችን ከታች በመጫን በቀጥታ ይሞክሩ።",
+        pillarsTitle: "4ቱ የዲጂታል ትራንስፎርሜሽን ምሰሶዎች", pillarsSub: "በመስራች ለማ አሰፋ የተገነባ — የእይታ፣ የቴክኖሎጂ እና የገበያ እድገትዎ በአንድ ቦታ።",
+        ordTitle: "⚡ ፕሮጀክትዎን አሁኑኑ ይጀምሩ", ordSub: "ቅጹን ይሙሉ—ትዕዛዝዎ ወዲያውኑ ወደ ዋና ስራ አስኪያጅ ለማ አሰፋ ስልክ ይደርሳል።"
+      },
+      ar: {
+        heroDesc: "نحول الشركات الطموحة إلى إمبراطوريات رقمية مؤتمتة — نجمع بين التصوير السينمائي 8K، وتصميم الهوية التجارية، وتطوير المواقع والذكاء الاصطناعي.",
+        btnApps: "🚀 استكشف مشاريعنا الحية", btnCon: "📝 العقود والفواتير الذكية",
+        appsTitle: "أنظمتنا الرقمية الحية", appsSub: "جرب منصاتنا الرقمية المنشورة مباشرة أدناه.",
+        pillarsTitle: "الأركان الأربعة للتحول الرقمي", pillarsSub: "بإشراف المؤسس ليما أسيفا — قوة متكاملة لجميع احتياجاتك.",
+        ordTitle: "⚡ ابدأ مشروعك الآن", ordSub: "أرسل تفاصيل مشروعك أدناه للتواصل المباشر."
+      },
+      fr: {
+        heroDesc: "Nous transformons les entreprises ambitieuses en empires numériques automatisés — alliant Cinématographie 8K, Identité de Marque et Systèmes Web IA.",
+        btnApps: "🚀 VOIR LES APPLICATIONS LIVE", btnCon: "📝 CONTRAT & FACTURE QR",
+        appsTitle: "SYSTÈMES CLIENTS INTERACTIFS", appsSub: "Testez nos plateformes numériques déployées en direct ci-dessous.",
+        pillarsTitle: "TRANSFORMATION NUMÉRIQUE EN 4 PILIERS", pillarsSub: "Conçu par Lemma Asefa — Une agence mondiale pour votre design, vidéo, web et marketing.",
+        ordTitle: "⚡ LANCEZ VOTRE PROJET", ordSub: "Envoyez votre demande directement sur le mobile du PDG Lemma Asefa."
+      }
+    };
+
+    function renderLangs(q = '') {
+      const box = document.getElementById('langList'); box.innerHTML = '';
+      LANGS.filter(l => l.name.toLowerCase().includes(q.toLowerCase()) || l.native.toLowerCase().includes(q.toLowerCase())).forEach(l => {
+        const d = document.createElement('div'); d.className = 'lang-item';
+        d.innerHTML = `<span>${l.native}</span><small style="color:var(--gold)">${l.code.toUpperCase()}</small>`;
+        d.onclick = () => setLang(l.code);
+        box.appendChild(d);
+      });
+    }
+    renderLangs();
+    function toggleLangMenu() { document.getElementById('langDropdown').classList.toggle('active'); }
+    function filterLanguages() { renderLangs(document.getElementById('langSearch').value); }
+
+    function setLang(code) {
+      document.getElementById('currentLangLabel').innerText = code.toUpperCase();
+      document.getElementById('langDropdown').classList.remove('active');
+      document.body.dir = (code === 'ar') ? 'rtl' : 'ltr';
+      const t = L_DICT[code] || L_DICT.en;
+      document.getElementById('heroDesc').innerText = t.heroDesc;
+      document.getElementById('btnViewApps').innerText = t.btnApps;
+      document.getElementById('btnContract').innerText = t.btnCon;
+      document.getElementById('appsTitle').innerText = t.appsTitle;
+      document.getElementById('appsSub').innerText = t.appsSub;
+      document.getElementById('pillarsTitle').innerText = t.pillarsTitle;
+      document.getElementById('pillarsSub').innerText = t.pillarsSub;
+      document.getElementById('ordTitle').innerText = t.ordTitle;
+      document.getElementById('ordSub').innerText = t.ordSub;
+    }
+
+    function sendOrder(ch) {
+      const n = document.getElementById('cName').value || 'VIP Client';
+      const p = document.getElementById('cPhone').value || '';
+      const s = document.getElementById('sType').value;
+      const d = document.getElementById('pDetails').value || '';
+      const msg = encodeURIComponent(`🔥 *NEW PROJECT ORDER — LA NEXUS™*\n👤 *Client:* ${n}\n📞 *Phone:* ${p}\n⚡ *Package:* ${s}\n📝 *Brief:* ${d}`);
+      window.open(ch === 'tg' ? `https://t.me/lemmaa9?text=${msg}` : `https://wa.me/251909506573?text=${msg}`, '_blank');
+    }
+  </script>
+</body>
+</html>
